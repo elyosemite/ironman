@@ -1,3 +1,9 @@
+mod repl;
+mod explorer;
+
+use explorer::Explorer;
+
 fn main() {
-    println!("Hello, world!");
+    let explorer = Explorer::new();
+    repl::start(explorer);
 }
