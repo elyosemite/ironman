@@ -1,7 +1,7 @@
 use std::io::{self, Write};
 use crate::explorer::Explorer;
 
-pub fn start(mut explorer: Explorer) {
+pub fn start(explorer: Explorer) {
     loop {
         print!("ironman> ");
         io::stdout().flush().unwrap();
@@ -28,9 +28,18 @@ pub fn start(mut explorer: Explorer) {
                 println!("{}", explorer.current_dir.display());
             }
 
+            "clean" | "cls" => {
+                clear_screen()
+            }
+
             _ => {
                 println!("Unknown command: {}", trimmed);
             }
         }
     }
+}
+
+fn clear_screen() {
+    print!("\x1B[2J\x1B[1;1H");
+    io::stdout().flush().unwrap();
 }
