@@ -3,7 +3,7 @@ use crate::explorer::Explorer;
 
 pub fn start(explorer: Explorer) {
     loop {
-        print!("ironman> ");
+        print!("ironman cli> ");
         io::stdout().flush().unwrap();
 
         let mut input = String::new();
