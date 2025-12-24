@@ -11,6 +11,12 @@ fn analyze_slice_two(slice: &[i64]) {
     println!("The slice has {} elements", slice.len());
 }
 
+fn composite_types() {
+    let array_of_tuples: [(i32, i32); 3] = [(1, 2), (3, 4), (5, 6)];
+    println!("First tuple: {:?}", array_of_tuples[0]);
+    println!("Second element of the second tuple: {}", array_of_tuples[1].1);
+}
+
 fn main() {
     // Fixed-size array
     let xs: [i32; 5] = [1, 2, 3, 4, 5];
