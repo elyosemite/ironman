@@ -8,6 +8,7 @@ fn analyze_slice(slice: &[i32]) {
 fn analyze_slice_two(slice: &[i64]) {
     println!("First element of the slice: {}", slice[0]);
     println!("Second element of the slice: {}", slice[1]);
+    println!("The slice has {} elements", slice.len());
 }
 
 fn main() {
