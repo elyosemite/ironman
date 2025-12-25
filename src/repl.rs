@@ -6,13 +6,13 @@ pub fn start(explorer: Explorer) {
         print!("ironman cli> ");
         io::stdout().flush().unwrap();
 
-        let mut input = String::new();
+        let mut input: String = String::new();
         if io::stdin().read_line(&mut input).is_err() {
             println!("Error reading input. Please try again.");
             continue;
         }
 
-        let trimmed = input.trim();
+        let trimmed: &str = input.trim();
 
         if trimmed.is_empty() {
             continue;
@@ -28,7 +28,7 @@ pub fn start(explorer: Explorer) {
                 println!("{}", explorer.current_dir.display());
             }
 
-            "clean" | "cls" => {
+            "clear" | "cls" => {
                 clear_screen()
             }
 
