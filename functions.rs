@@ -23,3 +23,17 @@ pub fn deposit(amount: u32, balance: &mut u32) -> Result<(), String> {
         Ok(())
     }
 }
+
+pub fn i_loop_over_items() {
+    let mut counter = 0;
+
+    let result = loop {
+        counter += 1;
+
+        if counter == 40 {
+            break counter * 2;
+        }
+    };
+
+    println!("The result is {result}");
+}
