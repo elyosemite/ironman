@@ -72,4 +72,26 @@ impl Node {
             }
         }
     }
+
+    fn level_order_traversal(root: &Option<Box<Node>>) -> Vec<i32> {
+        let mut result = Vec::new();
+        let mut queue = std::collections::VecDeque::new();
+
+        if let Some(node) = root {
+            queue.push_back(node);
+        }
+
+        while let Some(node) = queue.pop_front() {
+            result.push(node.value);
+
+            if let Some(left) = &node.left {
+                queue.push_back(left);
+            }
+            if let Some(right) = &node.right {
+                queue.push_back(right);
+            }
+        }
+
+        result
+    }
 }
