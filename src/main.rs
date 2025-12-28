@@ -1,5 +1,6 @@
 mod repl;
 mod explorer;
+mod binarytree;
 
 use explorer::Explorer;
 

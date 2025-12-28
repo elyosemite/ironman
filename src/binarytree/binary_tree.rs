@@ -6,7 +6,7 @@ struct Node {
 }
 
 impl Node {
-    fn New(value: i32) -> Self {
+    fn new(value: i32) -> Self {
         Node {
             value,
             left: None,
@@ -21,9 +21,9 @@ impl Node {
                 if value == node.value {
                     true
                 } else if value < node.value {
-                    search(&node.left, value)
+                    Node::search(&node.left, value)
                 } else {
-                    search(&node.right, value)
+                    Node::search(&node.right, value)
                 }
             }
         }
@@ -36,9 +36,9 @@ impl Node {
             }
             Some(node) => {
                 if value < node.value {
-                    insert(&mut node.left, value);
+                    Node::insert(&mut node.left, value);
                 } else if value > node.value {
-                    insert(&mut node.right, value);
+                    Node::insert(&mut node.right, value);
                 }
                 // valores iguais são ignorados (opção de projeto)
             }
@@ -48,7 +48,7 @@ impl Node {
     fn find_min(node: &Box<Node>) -> i32 {
         match &node.left {
             None => node.value,
-            Some(left) => find_min(left),
+            Some(left) => Node::find_min(left),
         }
     }
 
@@ -56,18 +56,18 @@ impl Node {
     fn remove(root: &mut Option<Box<Node>>, value: i32) {
         if let Some(node) = root {
             if value < node.value {
-                remove(&mut node.left, value);
+                Node::remove(&mut node.left, value);
             } else if value > node.value {
-                remove(&mut node.right, value);
+                Node::remove(&mut node.right, value);
             } else {
                 if node.left.is_none() {
                     *root = node.right.take();
                 } else if node.right.is_none() {
                     *root = node.left.take();
                 } else {
-                    let min_value = find_min(node.right.as_ref().unwrap());
+                    let min_value = Node::find_min(node.right.as_ref().unwrap());
                     node.value = min_value;
-                    remove(&mut node.right, min_value)
+                    Node::remove(&mut node.right, min_value)
                 }
             }
         }
