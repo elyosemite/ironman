@@ -1,12 +1,12 @@
 #[derive(Debug)]
-struct Node {
-    value: i32,
-    left: Option<Box<Node>>,
-    right: Option<Box<Node>>,
+pub struct Node {
+    pub value: i32,
+    pub left: Option<Box<Node>>,
+    pub right: Option<Box<Node>>,
 }
 
 impl Node {
-    fn new(value: i32) -> Self {
+    pub fn new(value: i32) -> Self {
         Node {
             value,
             left: None,
@@ -14,7 +14,7 @@ impl Node {
         }
     }
 
-    fn search(root: &Option<Box<Node>>, value: i32) -> bool {
+    pub fn search(root: &Option<Box<Node>>, value: i32) -> bool {
         match root {
             None => false,
             Some(node) => {
@@ -29,7 +29,7 @@ impl Node {
         }
     }
 
-    fn insert(root: &mut Option<Box<Node>>, value: i32) {
+    pub fn insert(root: &mut Option<Box<Node>>, value: i32) {
         match root {
             None => {
                 *root = Some(Box::new(Node::new(value)));
@@ -45,7 +45,7 @@ impl Node {
         }
     }
 
-    fn find_min(node: &Box<Node>) -> i32 {
+    pub fn find_min(node: &Box<Node>) -> i32 {
         match &node.left {
             None => node.value,
             Some(left) => Node::find_min(left),
@@ -53,7 +53,7 @@ impl Node {
     }
 
 
-    fn remove(root: &mut Option<Box<Node>>, value: i32) {
+    pub fn remove(root: &mut Option<Box<Node>>, value: i32) {
         if let Some(node) = root {
             if value < node.value {
                 Node::remove(&mut node.left, value);
@@ -73,7 +73,7 @@ impl Node {
         }
     }
 
-    fn level_order_traversal(root: &Option<Box<Node>>) -> Vec<i32> {
+    pub fn level_order_traversal(root: &Option<Box<Node>>) -> Vec<i32> {
         let mut result = Vec::new();
         let mut queue = std::collections::VecDeque::new();
 
