@@ -52,7 +52,6 @@ fn test_search_arvore_vazia() {
     assert!(!Node::search(&tree, 10));
 }
 
-// ============ Testes para find_min ============
 
 #[test]
 fn test_find_min_arvore_completa() {
