@@ -8,7 +8,8 @@ pub struct Explorer {
 impl Explorer {
     pub fn new() -> Self {
         Explorer {
-            current_dir: std::env::current_dir().unwrap_or_else(|_| PathBuf::from("/"))
+            current_dir: std::env::current_dir()
+                .unwrap_or_else(|_| PathBuf::from("/"))
         }
     }
 
