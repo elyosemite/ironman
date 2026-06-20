@@ -1,4 +1,4 @@
-use ironman::binarytree::Node;
+use data_structures::binarytree::Node;
 
 // Helper para criar uma árvore de teste
 fn create_test_tree() -> Option<Box<Node>> {

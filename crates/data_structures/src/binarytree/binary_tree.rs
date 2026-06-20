@@ -7,7 +7,7 @@ pub struct Node {
 
 impl Node {
     pub fn new(value: i32) -> Self {
-        Node {
+        Self {
             value,
             left: None,
             right: None,
