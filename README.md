@@ -1,94 +1,121 @@
 # Ironman
 
-Ironman is a practical, extensible CLI project designed to help software engineers learn Rust by building something real. The goal is education: understand Rust fundamentals while creating a small, usable command-line tool.
-
-Ironman acts as a simple File Explorer in your terminal. You will implement and use basic commands like `ls`, `cd`, and more as you grow the project. This is not meant to compete with full-featured file managers; it is a learning vehicle.
+Ironman is a practical, extensible Cargo workspace designed to help software engineers learn Rust by building something real, studying data structures, and practicing language fundamentals. The goal is education: understand Rust while creating small, usable, and well-organized code.
 
 ## Why Ironman?
 - Learn Rust by doing: build a CLI step by step.
-- Keep scope small and focused on core concepts.
-- Extend at your own pace with new commands and features.
-- Readable, approachable code intended for learners.
+- Practice data structures with proper unit/integration tests.
+- Study language fundamentals (variables, structs, traits, formatting, etc.) in isolated, runnable examples.
+- Keep concerns separated as the project grows, instead of piling everything into one crate.
+
+## Project Structure
+
+This is a Cargo workspace with three crates under `crates/`:
+
+```
+ironman/
+├── Cargo.toml                 workspace manifest (members = ["crates/*"])
+└── crates/
+    ├── explorer/               bin "ironman" — the actual CLI file explorer
+    │   └── src/
+    │       ├── main.rs
+    │       ├── explorer.rs
+    │       └── repl.rs
+    ├── data_structures/        lib — data structures with tests (binary tree, and more to come)
+    │   ├── src/
+    │   │   └── binarytree/
+    │   └── tests/
+    └── fundamentals/           lib + examples/ — Rust language fundamentals studies
+        └── examples/
+            ├── variables.rs
+            ├── structs.rs
+            ├── arrays.rs
+            ├── formatting.rs
+            ├── debug_mode.rs
+            ├── functions.rs
+            ├── tuple.rs
+            └── traits.rs
+```
+
+- **`explorer`**: the real app. A simple File Explorer REPL in your terminal. Implement and use basic commands like `ls`, `cd`, `pwd`, and more as you grow the project. Not meant to compete with full-featured file managers — it's a learning vehicle.
+- **`data_structures`**: a library crate for studying data structures (currently a binary search tree). Each structure should come with its own unit and/or integration tests.
+- **`fundamentals`**: a collection of small, independent Rust scripts using [Cargo examples](https://doc.rust-lang.org/cargo/reference/cargo-targets.html#examples) to practice language fundamentals — variables, structs, tuples, traits, formatting, debug printing, functions, and arrays.
 
 ## Quick Start
 
 ### Prerequisites
 - Rust toolchain installed (via rustup): https://www.rust-lang.org/learn/get-started
 
-### Build
+### Build everything
 ```bash
-cargo build
+cargo build --workspace
 ```
 
-### Run
-Run Ironman through Cargo while you develop:
+### Run the explorer CLI
 ```bash
-cargo run -- ls
-cargo run -- cd .
-cargo run -- help
+cargo run -p explorer
+```
+
+Inside the REPL:
+```
+ironman cli> pwd
+ironman cli> exit
 ```
 
 Optionally install the binary locally:
 ```bash
-cargo install --path .
-ironman ls
+cargo install --path crates/explorer
+ironman
 ```
 
-## Usage
+### Run a fundamentals example
+```bash
+cargo run --example variables -p fundamentals
+cargo run --example traits -p fundamentals
+```
 
-Ironman aims to support simple file exploration commands you typically use from a shell. As you implement features, try them like:
+### Run data structures tests
+```bash
+cargo test -p data_structures
+```
 
-- List directory contents:
-	```bash
-	cargo run -- ls
-	```
-
-- Change directory:
-	```bash
-	cargo run -- cd <path>
-	```
-
-- Show help:
-	```bash
-	cargo run -- help
-	```
-
-Note: Command availability depends on what you have implemented so far. Start small, then add more.
-
-## Project Structure
-
-- `src/main.rs`: CLI entry point; parse args, route to commands.
-- Other Rust files (e.g., `variables.rs`, `structs.rs`, `arrays.rs`) can be used to practice Rust fundamentals and organize features.
-- You can split commands into modules to keep code clean as the project grows.
+### Run everything (build + tests across the workspace)
+```bash
+cargo build --workspace
+cargo test --workspace
+```
 
 ## Learn by Building
 
 Suggested learning path while coding:
-- Parse command-line arguments.
-- Work with paths and the filesystem (list, change directory, read files).
-- Handle errors clearly and return results.
-- Add tests for command behavior.
-- Refactor into modules for readability.
+- **explorer**: parse REPL commands, work with paths and the filesystem (list, change directory, read files), handle errors clearly, add tests for command behavior.
+- **data_structures**: implement a new structure (linked list, stack, queue, heap...), write unit tests inside the module and integration tests under `tests/`.
+- **fundamentals**: add a new example per concept you want to study; keep each one runnable on its own via `cargo run --example <name> -p fundamentals`.
 
 ## Extending Ironman
 
-Ideas to implement next:
-- `pwd`: print current directory.
+Ideas to implement next in `explorer`:
+- `ls`: wire up `Explorer::list_directory` to a REPL command.
+- `cd <path>`: wire up `Explorer::change_directory` to a REPL command.
 - `cat <file>`: show file contents.
 - `mkdir <name>`: create a folder.
 - Flags (e.g., `ls -a`, `ls -l`).
 
+Ideas to implement next in `data_structures`:
+- Linked list, stack, queue, hash map from scratch.
+- Sorting and searching algorithms.
+
 Implementation tips:
-- Add a dispatcher in `src/main.rs` that matches the first argument (command name).
+- Add a dispatcher in `crates/explorer/src/repl.rs` that matches the command name.
 - Put command logic in dedicated modules/functions.
 - Keep output simple and predictable.
 
 ## Roadmap
 
-- Core commands: `ls`, `cd`, `pwd`.
+- Core explorer commands: `ls`, `cd`, `pwd`.
 - Better error messages and logging.
-- Basic tests for each command.
-- Optional formatting and color output.
+- More data structures with full test coverage.
+- More fundamentals examples (generics, lifetimes, error handling, iterators, async).
 - Cross-platform checks (Windows, macOS, Linux).
 
 ## Contributing
@@ -96,9 +123,8 @@ Implementation tips:
 Contributions are welcome, especially improvements that help learners:
 - Keep code clear and well-structured.
 - Prefer small, focused pull requests.
-- Add examples and docs when you introduce new commands.
+- Add examples and docs when you introduce new commands or structures.
 
 ## Disclaimer
 
-Ironman is an educational project. It is not intended to replace mature file explorer tools in the community. Use it to learn Rust and CLI design, and extend it as your skills grow.
-# ironman
+Ironman is an educational project. It is not intended to replace mature file explorer tools in the community. Use it to learn Rust, data structures, and project organization, and extend it as your skills grow.
