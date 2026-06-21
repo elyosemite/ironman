@@ -1,5 +1,5 @@
 pub fn another_function(x: i32) {
-        println!("The value of x is {x}");
+    println!("The value of x is {x}");
 }
 
 pub fn print_labbled_measurement(value: i32, unit_label: char) {
@@ -36,4 +36,16 @@ pub fn i_loop_over_items() {
     };
 
     println!("The result is {result}");
+}
+
+fn main() {
+    another_function(5);
+    print_labbled_measurement(5, 'h');
+
+    let mut balance = 100;
+    withdraw(30, &mut balance).unwrap();
+    deposit(20, &mut balance).unwrap();
+    println!("Final balance: {balance}");
+
+    i_loop_over_items();
 }

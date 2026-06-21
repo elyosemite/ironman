@@ -60,3 +60,11 @@ pub fn show_social_post() {
     };
     println!("1 new post: {}", post.summarize());
 }
+
+fn main() {
+    let dog = Dog;
+    make_a_sound(&dog);
+    make_a_second_sound(&dog);
+
+    show_social_post();
+}
