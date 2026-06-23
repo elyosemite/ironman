@@ -5,7 +5,7 @@ Ironman is a practical, extensible Cargo workspace designed to help software eng
 ## Why Ironman?
 - Learn Rust by doing: build a CLI step by step.
 - Practice data structures with proper unit/integration tests.
-- Study language fundamentals (variables, structs, traits, formatting, etc.) in isolated, runnable examples.
+- Study language fundamentals (variables, structs, traits, functions, etc.) by proving you understood them with `#[test]` assertions, not just by reading printed output.
 - Keep concerns separated as the project grows, instead of piling everything into one crate.
 
 ## Project Structure
@@ -25,21 +25,22 @@ ironman/
     │   ├── src/
     │   │   └── binarytree/
     │   └── tests/
-    └── fundamentals/           lib + examples/ — Rust language fundamentals studies
+    └── fundamentals/           lib (unit tests) + examples/ (visual output) — language studies
+        ├── src/
+        │   ├── variables.rs
+        │   ├── arrays.rs
+        │   ├── structs.rs
+        │   ├── functions.rs
+        │   ├── tuple.rs
+        │   └── traits.rs
         └── examples/
-            ├── variables.rs
-            ├── structs.rs
-            ├── arrays.rs
             ├── formatting.rs
-            ├── debug_mode.rs
-            ├── functions.rs
-            ├── tuple.rs
-            └── traits.rs
+            └── debug_mode.rs
 ```
 
 - **`explorer`**: the real app. A simple File Explorer REPL in your terminal. Implement and use basic commands like `ls`, `cd`, `pwd`, and more as you grow the project. Not meant to compete with full-featured file managers — it's a learning vehicle.
 - **`data_structures`**: a library crate for studying data structures (currently a binary search tree). Each structure should come with its own unit and/or integration tests.
-- **`fundamentals`**: a collection of small, independent Rust scripts using [Cargo examples](https://doc.rust-lang.org/cargo/reference/cargo-targets.html#examples) to practice language fundamentals — variables, structs, tuples, traits, formatting, debug printing, functions, and arrays.
+- **`fundamentals`**: a hybrid of two styles for language studies. Concepts you can *prove* you understood (shadowing, ownership, structs, traits, functions, tuples) live as modules in `src/` with `#[cfg(test)] mod tests` blocks using `assert_eq!` — run them with `cargo test -p fundamentals`. Concepts that are inherently about *what gets printed* (`println!`/`{:?}` formatting) stay as [Cargo examples](https://doc.rust-lang.org/cargo/reference/cargo-targets.html#examples) you run and read with `cargo run --example <name> -p fundamentals`.
 
 ## Quick Start
 
@@ -68,10 +69,14 @@ cargo install --path crates/explorer
 ironman
 ```
 
-### Run a fundamentals example
+### Run the fundamentals studies
 ```bash
-cargo run --example variables -p fundamentals
-cargo run --example traits -p fundamentals
+# concepts proven via assertions
+cargo test -p fundamentals
+
+# concepts you read as printed output
+cargo run --example formatting -p fundamentals
+cargo run --example debug_mode -p fundamentals
 ```
 
 ### Run data structures tests
@@ -90,7 +95,7 @@ cargo test --workspace
 Suggested learning path while coding:
 - **explorer**: parse REPL commands, work with paths and the filesystem (list, change directory, read files), handle errors clearly, add tests for command behavior.
 - **data_structures**: implement a new structure (linked list, stack, queue, heap...), write unit tests inside the module and integration tests under `tests/`.
-- **fundamentals**: add a new example per concept you want to study; keep each one runnable on its own via `cargo run --example <name> -p fundamentals`.
+- **fundamentals**: for a new concept, default to a `src/` module with `#[test]` assertions proving what you learned; only reach for an `examples/` file when the point of the concept *is* the printed output (formatting, `Debug`/`Display` impls).
 
 ## Extending Ironman
 
