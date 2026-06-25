@@ -1,50 +1,54 @@
-pub trait Animal {
-    fn do_something(&self) -> String;
-}
+struct Sheep { naked: bool, name: &'static str }
 
-pub struct Dog;
+trait Animal {
+    // Associated function signature; 'Self' refers to the implementor type
+    fn new(name: &'static str) -> Self;
 
-impl Animal for Dog {
-    fn do_something(&self) -> String {
-        "Woof".to_string()
+    // Method signatures; these will return a string
+    fn name(&self) -> &'static str;
+    fn noise(&self) -> &'static str;
+
+    // Traits can provide default method definitions
+    fn talk(&self) {
+        println!("{} says {}", self.name(), self.noise());
     }
 }
 
-pub fn make_a_sound(animal: &impl Animal) -> String {
-    animal.do_something()
-}
+impl Sheep {
+    fn is_naked(&self) -> bool {
+        self.naked
+    }
 
-pub fn make_a_second_sound<T: Animal>(animal: &T) -> String {
-    animal.do_something()
-}
-
-pub trait Summary {
-    fn summarize(&self) -> String;
-}
-
-pub struct NewsArticle {
-    pub headline: String,
-    pub location: String,
-    pub author: String,
-    pub content: String,
-}
-
-impl Summary for NewsArticle {
-    fn summarize(&self) -> String {
-        format!("{}, by {} ({})", self.headline, self.author, self.location)
+    fn shear(&mut self) {
+        if self.is_naked() {
+            // Implementor methods can use the imeplementos, triat methods.
+            println!("{} is already naked ...", self.name());
+        } else {
+            println!("{} gets a haricut!", self.name);
+            self.naked = true;
+        }
     }
 }
 
-pub struct SocialPost {
-    pub username: String,
-    pub content: String,
-    pub reply: bool,
-    pub repost: bool,
-}
+impl Animal for Sheep {
+    fn new(name: &'static str) -> Sheep {
+        Sheep { name: name, naked: false }
+    }
 
-impl Summary for SocialPost {
-    fn summarize(&self) -> String {
-        format!("{}: {}", self.username, self.content)
+    fn name(&self) -> &'static str {
+        self.name
+    }
+
+    fn noise(&self) -> &'static str {
+        if self.is_naked() {
+            "I am naked, bro"
+        } else {
+            "I am not naked, bro"
+        }
+    }
+
+    fn talk(&self) {
+        println!("{} pauses briefly ...{}", self.name, self.noise())
     }
 }
 
