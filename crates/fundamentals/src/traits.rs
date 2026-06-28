@@ -1,14 +1,10 @@
 struct Sheep { naked: bool, name: &'static str }
 
 trait Animal {
-    // Associated function signature; 'Self' refers to the implementor type
     fn new(name: &'static str) -> Self;
-
-    // Method signatures; these will return a string
     fn name(&self) -> &'static str;
     fn noise(&self) -> &'static str;
 
-    // Traits can provide default method definitions
     fn talk(&self) {
         println!("{} says {}", self.name(), self.noise());
     }
@@ -21,10 +17,9 @@ impl Sheep {
 
     fn shear(&mut self) {
         if self.is_naked() {
-            // Implementor methods can use the imeplementos, triat methods.
             println!("{} is already naked ...", self.name());
         } else {
-            println!("{} gets a haricut!", self.name);
+            println!("{} gets a haircut!", self.name);
             self.naked = true;
         }
     }
@@ -32,7 +27,7 @@ impl Sheep {
 
 impl Animal for Sheep {
     fn new(name: &'static str) -> Sheep {
-        Sheep { name: name, naked: false }
+        Sheep { name, naked: false }
     }
 
     fn name(&self) -> &'static str {
@@ -49,6 +44,60 @@ impl Animal for Sheep {
 
     fn talk(&self) {
         println!("{} pauses briefly ...{}", self.name, self.noise())
+    }
+}
+
+// --- impl Trait / generic trait bounds ---
+
+trait Sound {
+    fn sound(&self) -> &'static str;
+}
+
+struct Dog;
+
+impl Sound for Dog {
+    fn sound(&self) -> &'static str {
+        "Woof"
+    }
+}
+
+fn make_a_sound(animal: &impl Sound) -> &'static str {
+    animal.sound()
+}
+
+fn make_a_second_sound<T: Sound>(animal: &T) -> &'static str {
+    animal.sound()
+}
+
+// --- shared trait across multiple types ---
+
+trait Summary {
+    fn summarize(&self) -> String;
+}
+
+struct NewsArticle {
+    headline: String,
+    location: String,
+    author: String,
+    content: String,
+}
+
+impl Summary for NewsArticle {
+    fn summarize(&self) -> String {
+        format!("{}, by {} ({})", self.headline, self.author, self.location)
+    }
+}
+
+struct SocialPost {
+    username: String,
+    content: String,
+    reply: bool,
+    repost: bool,
+}
+
+impl Summary for SocialPost {
+    fn summarize(&self) -> String {
+        format!("{}: {}", self.username, self.content)
     }
 }
 

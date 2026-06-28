@@ -24,6 +24,7 @@ mod tests {
     fn slices_expose_their_first_element_and_length() {
         let xs: [i32; 5] = [1, 2, 3, 4, 5];
         assert_eq!(first_and_len(&xs), (1, 5));
+        assert_eq!(xs, [1, 2, 3, 4, 5])
     }
 
     #[test]
